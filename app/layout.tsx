@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}>{children}</body>
+      <body className={`${ibmPlexSans.className} ${bebasNeue.variable} text-white antialiased`}>{children}</body>
     </html>
   );
 }

@@ -95,7 +95,7 @@ export default {
         },
       },
       screens: {
-        xs: '480px',
+        xs: '501px',
       },
       borderRadius: {
         lg: 'var(--radius)',
