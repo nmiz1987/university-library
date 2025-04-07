@@ -2,11 +2,11 @@ import Image from 'next/image';
 import { Button } from './ui/button';
 import BookCover from './BookCover';
 
-export default function BookOverview({ author, genre, rating, totalCopies, availableCopies, description, coverUrl, coverColor }: BookProps) {
+export default function BookOverview({ author, genre, rating, totalCopies, availableCopies, description, coverUrl, coverColor, title }: BookProps) {
   return (
     <section className="book-overview">
       <div className="flex flex-1 flex-col gap-5">
-        <h1>A long boog title</h1>
+        <h1>{title}</h1>
         <div className="book-info">
           <p>
             By <span className="font-semibold text-light-200">{author}</span>
