@@ -1,11 +1,13 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DefaultValues, FieldValues, SubmitHandler, useForm, UseFormReturn } from 'react-hook-form';
+import { DefaultValues, FieldValues, Path, SubmitHandler, useForm, UseFormReturn } from 'react-hook-form';
 import { ZodType } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
+import { FIELD_NAMES, FIELD_TYPES } from '@/constants';
+import ImageUpload from './ImageUpload';
 
 interface AuthFormProps<T extends FieldValues> {
   type: 'SIGN_IN' | 'SIGN_UP';
@@ -32,28 +34,36 @@ export default function AuthForm<T extends FieldValues>({ type, schema, defaultV
           : 'Please complete all fields and upload a valid university ID to gain access to the library'}
       </p>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormDescription>This is your public display name.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">Submit</Button>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full space-y-6">
+          {Object.keys(defaultValues).map(field => (
+            <FormField
+              key={field}
+              control={form.control}
+              name={field as Path<T>}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="capitalize">{FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}</FormLabel>
+                  <FormControl>
+                    {field.name === 'universityCard' ? (
+                      <ImageUpload />
+                    ) : (
+                      <Input className="form-input" required type={FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]} {...field} />
+                    )}
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ))}
+          <Button className="form-btn" type="submit">
+            {isSignIn ? 'Sign in' : 'Sign up'}
+          </Button>
         </form>
       </Form>
       <p className="text-center text-base font-medium">
         {isSignIn ? 'New to BookWise? ' : 'Already have an account? '}
 
-        <Link href={isSignIn ? '/sign-up' : '/sign-in'} className="text-center text-sm text-light-100">
+        <Link href={isSignIn ? '/sign-up' : '/sign-in'} className="text-center text-sm text-primary">
           {isSignIn ? 'Create an account' : 'Sign in'}
         </Link>
       </p>
