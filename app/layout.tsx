@@ -47,7 +47,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html lang="en">
       <SessionProvider session={session}>
-        <body className={`${ibmPlexSans.className} ${bebasNeue.variable} text-white antialiased`}>
+        <body className={`${ibmPlexSans.className} ${bebasNeue.variable} antialiased`}>
           {children}
           <Toaster />
         </body>
