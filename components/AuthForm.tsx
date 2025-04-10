@@ -8,6 +8,8 @@ import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { FIELD_NAMES, FIELD_TYPES } from '@/constants';
 import ImageUpload from './ImageUpload';
+import { useToast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
 
 interface AuthFormProps<T extends FieldValues> {
   type: 'SIGN_IN' | 'SIGN_UP';
@@ -17,13 +19,30 @@ interface AuthFormProps<T extends FieldValues> {
 }
 
 export default function AuthForm<T extends FieldValues>({ type, schema, defaultValues, onSubmit }: AuthFormProps<T>) {
+  const router = useRouter();
   const isSignIn = type === 'SIGN_IN';
+  const { toast } = useToast();
   const form: UseFormReturn<T> = useForm({
     resolver: zodResolver(schema),
     defaultValues: defaultValues as DefaultValues<T>,
   });
 
-  const handleSubmit: SubmitHandler<T> = async data => {};
+  const handleSubmit: SubmitHandler<T> = async data => {
+    const result = await onSubmit(data);
+    if (result.success) {
+      toast({
+        title: 'Success',
+        description: isSignIn ? 'You have successfully signed in' : 'You have successfully signed up',
+      });
+      router.push('/');
+    } else {
+      toast({
+        title: `Error ${isSignIn ? 'signing in' : 'signing up'}`,
+        description: result.error ?? 'An error occurred',
+        variant: 'destructive',
+      });
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4">

@@ -14,25 +14,25 @@ interface BookProps {
   isLoanedBook?: boolean;
 }
 
-// interface AuthCredentails {
-//   fullname: string;
-//   email: string;
-//   password: string;
-//   universityId: number;
-//   universityCard: string;
-// }
+interface AuthCredentials {
+  fullName: string;
+  email: string;
+  password: string;
+  universityId: number;
+  universityCard: string;
+}
 
-// interface User {
-//   id: string;
-//   fullname: string;
-//   email: string;
-//   universityId: number;
-//   universityCard: string;
-//   status: 'PENDING' | 'APPROVED' | 'REJECTED' | null;
-//   role: 'USER' | 'ADMIN' | null;
-//   lastActivityDate: string | null;
-//   createdAt: Date | null;
-// }
+interface User {
+  id: string;
+  fullname: string;
+  email: string;
+  universityId: number;
+  universityCard: string;
+  status: 'PENDING' | 'APPROVED' | 'REJECTED' | null;
+  role: 'USER' | 'ADMIN' | null;
+  lastActivityDate: string | null;
+  createdAt: Date | null;
+}
 
 // interface BorrowRecord {
 //   id: string;
